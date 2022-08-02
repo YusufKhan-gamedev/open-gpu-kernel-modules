@@ -60,6 +60,10 @@
 #include <drm/drm_ioctl.h>
 #endif
 
+#if defined(NV_DRM_DRM_FB_HELPER_H_PRESENT)
+#include <drm/drm_fb_helper.h>
+#endif
+
 #include <linux/pci.h>
 
 /*
@@ -946,6 +950,10 @@ static void nv_drm_register_drm_device(const nv_gpu_info_t *gpu_info)
 
     nv_dev->next = dev_list;
     dev_list = nv_dev;
+
+    #if defined(NV_DRM_DRM_FB_HELPER_H_PRESENT)
+    drm_fbdev_generic_setup(dev, 0);
+    #endif
 
     return; /* Success */
 
